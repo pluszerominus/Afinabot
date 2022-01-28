@@ -1,3 +1,3 @@
-tensorflow==2.6.0
+PyTorch
 discord.py==1.7.3
 schedule==1.1.0
