@@ -1,6 +1,8 @@
 import pickle
 import threading
-import keras
+#import keras
+#import tensorflow
+from tensorflow import keras
 #from tensorflow.keras.preprocessing.text import Tokenizer
 import numpy
 #from tensorflow.keras.preprocessing.sequence import pad_sequences
