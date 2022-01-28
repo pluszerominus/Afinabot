@@ -1,8 +1,9 @@
 import pickle
 import threading
 import keras
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing.sequence import pad_sequences
+#from tensorflow.keras.preprocessing.text import Tokenizer
+import numpy
+#from tensorflow.keras.preprocessing.sequence import pad_sequences
 import discord
 from discord.ext import commands, tasks
 from discord.utils import get
@@ -12,6 +13,7 @@ import random
 import schedule
 from threading import Thread,Event
 import re
+
 
 #   Создаём подключение к БД и таблицу
 
@@ -138,10 +140,19 @@ def matmassage(mess):
     #massage = " ".join(massage)
     massage = mess
     #print(massage)
+    text = massage.split(" ")
+    if len(text) >= 1000:
+        text = text[0:1000]
+        zerotext = []
+    else:
+        zerotext = [0] * (1000 - len(text))
+    # Функция лежит в sound
     sequence = tokenizer.texts_to_sequences([massage])
-    #print(sequence)
-    data = pad_sequences(sequence, maxlen=1000)
+    #print("1224",type(sequence))
+    data = numpy.asarray([zerotext+sequence[0]])
     #print(data)
+    #data = pad_sequences(sequence, maxlen=1000)
+    #print(data,type(data),len(data))
     result = model.predict(data)
     for b in result:
         print(b, " - ", massage)
