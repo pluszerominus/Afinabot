@@ -1,10 +1,8 @@
 import pickle
 import threading
-#import keras
-#import tensorflow
 from tensorflow import keras
-#from tensorflow.keras.preprocessing.text import Tokenizer
-#import numpy
+from tensorflow.keras.preprocessing.text import Tokenizer
+import numpy
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import discord
 from discord.ext import commands, tasks
@@ -35,7 +33,7 @@ cur.execute("""CREATE TABLE IF NOT EXISTS clientservers(
             threats INT,
             NSFW INT);
             """)
-#cur.execute("DROP TABLE clientservers") 923622240304660530
+
 global result
 connect.commit()
 cur.execute("SELECT * FROM clientservers")
@@ -45,33 +43,30 @@ print(result)
 def spacedel(sent):
     #word = "предложение с вот таким с л о в о м"
     lisw = sent.split(" ")
-    #coplist = lisw.copy()
+            
     finword=''
-    #print(coplist)
+
     n = -1
     for ind,i in enumerate(lisw):
         if len(i) == 1 and i != " ":
             if n == -1:
                 n = ind
-            #print(ind,i)
             finword+=i
-            #print(n)
+           
             if ind != n:
                 lisw[ind] = "!цЩВкм"
         elif len(i)>1 and finword!="":
             lisw[n] = finword
-            #print(lisw)
             n = -1
             finword=""
-    #print(finword)
     if finword != "":
         lisw[n] = finword
         finword = ''
     while "!цЩВкм" in lisw:
         lisw.remove("!цЩВкм")
     messageres = " ".join(lisw)
-    #print(messageres)
     return messageres
+
 def n_gramm(mess):
     mess = re.sub("[!»()+,-./:;<=>[\\]^`{|}~\t\n«»]", " ", mess)
     mess = spacedel(mess)
@@ -132,23 +127,10 @@ def printtoken():
 #   Функция для запуска нейронной сети
 
 def matmassage(mess):
-    #sent2 =[]
-    #mess = re.sub("[’!»#$%&()*+,-./:;<=>?@\\]^_`{|}~\t\n]", "", mess)
-    #mess = list(mess.replace(" ", ""))
-    #massage = " ".join(mess)
-    #print(massage)
-    #sent2.append(words)
-    #massage = list(mess)
-    #massage = " ".join(massage)
     massage = mess
-    #print(massage)
     # Функция лежит в sound
     sequence = tokenizer.texts_to_sequences([massage])
-    #print("1224",type(sequence))
-    #data = numpy.asarray([zerotext+sequence[0]])
-    #print(data)
     data = pad_sequences(sequence, maxlen=1000)
-    #print(data,type(data),len(data))
     result = model.predict(data)
     for b in result:
         print(b, " - ", massage)
@@ -189,11 +171,11 @@ bot = commands.Bot(command_prefix='!')
 
 @bot.command(name = "checkkey")
 async def checkkey(ctx,arg):
-    if arg == 1 and ctx.guild.id == 548223779705323520:
+    if arg == 1 and ctx.guild.id == 548223779705323620:
         cur.execute("SELECT * FROM clientservers")
         rez = cur.fetchall()
         await me.send(rez)
-    elif ctx.guild.id == 548223779705323520 and arg !=1:
+    elif ctx.guild.id == 548223779705323620 and arg !=1:
         cur.execute("SELECT * FROM clientservers WHERE servername = ?",(arg,))
         rez = cur.fetchall()
         await me.send(rez)
@@ -202,7 +184,7 @@ async def checkkey(ctx,arg):
 
 @bot.command(name = "payinf")
 async def payinf(ctx,arg1,arg2,arg3):
-    if ctx.guild.id == 548223779705323520:
+    if ctx.guild.id == 548223779705323620:
         print(1)
         if arg1 == -2:
             cur.execute("UPDATE clientservers set payinfo = ? WHERE serverid = ?", (arg1, arg2,))
@@ -262,14 +244,11 @@ async def on_message(message):
     t0 = time.time()
     cur.execute("SELECT * FROM clientservers WHERE serverid = ?",(message.guild.id,))
     servres = cur.fetchone()
-    #print(type(servres[2]))
     if servres[3]>0 or servres[2]== -1:
         if isinstance(message.content,str) and str(message.author) != "NN _ antimat#0525":
-            #print(message.guild.name)
             messageres = message.content
             countlet = 0
             messageres = n_gramm(messageres)
-            #if len(messageres)> 100
             filter = {'}|{': 'ж', 'IO': 'ю', 'a': 'а', 'A': 'а', 'o': 'о', 'O': 'о', 'b': 'б', 'B': 'в', 'r': 'р',
                       'g': 'г',
                       'd': 'д', 'E': 'е', 'e': 'е',
@@ -279,8 +258,6 @@ async def on_message(message):
                       'T': 'т', 'm': 'м', 't': 'т', 'y': 'у', 'Y': 'у', 'x': 'х', 'X': 'х', 'u': 'ц', '4': 'ч',
                       'w': 'ш',
                       'W': 'ш', 'R': 'r', 'i': 'и', '1': 'и', '@': 'а', 'I': 'и', }
-            #for f in filter:
-                #messageres = messageres.replace(f, filter[f])
             print(messageres)
             sen_res = matmassage(messageres)
             if sen_res > 0.5:
@@ -293,13 +270,10 @@ async def on_message(message):
                 await channel.send(embed = embed)
 
                 print("Время удаления : ", t2)
-                #await me.send(1)
                 await me.send("1;"+ message.content + f" {round(t2,3)}")
             else:
-                #await me.send("0;" + message.content)
                 pass
             await bot.process_commands(message)
-            #t1 = time.time()
 
 #   Создание второго потока для проверки времени
 
@@ -309,4 +283,4 @@ thread2.start()
 
 #   Запускаем бота
 
-bot.run("OTA0NDA3MDU2OTk0NDE0NjEy.YX7EtQ.de8fALQnYKb1o5opN2TUKFI1NKA")
+bot.run("BotID")
