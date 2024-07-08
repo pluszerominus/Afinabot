@@ -44,4 +44,4 @@ if __name__ == '__main__':
     # Вывод графика успешности обучения
     plot_history(history)
     # Сохранение модели нейросети
-    model.save('banwordnet.h5')
+    model.save('model_LSTM.h5')
