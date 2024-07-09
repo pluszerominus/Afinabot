@@ -18,7 +18,8 @@ Afinabot - бот для сервиса Discord, который позволяе
 ## Архитектуры
 
 Были реализованы две архитектуры
-1. Персептрон
+#1. Персептрон
+![alt text](https://github.com/pluszerominus/Afinabot/blob/main/img/Perceptrone.png)
 2. Сеть LSTM
 
 
