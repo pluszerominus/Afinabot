@@ -5,7 +5,7 @@ from tensorflow.keras.layers import Dense, LSTM, Embedding, Dropout
 def model_LSTM():
     model = Sequential()
 
-    model.add(Embedding(2048, 2, input_length=10))
+    model.add(Embedding(2048, 2, input_length=700))
     model.add(Dropout(0.15))
     model.add(LSTM(32, return_sequences=True))
     model.add(LSTM(32))
