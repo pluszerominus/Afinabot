@@ -20,7 +20,7 @@ def preprocessing_LSTM(data):
             else:
                 temp[i] = np.dtype('int32').type(w)
         data[0][it] = temp
-    data[0] = pad_sequences(data[0], 10)
+    data[0] = pad_sequences(data[0], 700)
     return data
 
 def preprocessing_perceptron(data,max_len=700):
