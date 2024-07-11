@@ -112,9 +112,9 @@ def keycreate():
     return keystr
 
 #   Импортируем данные
-
+model_path = Path.cwd() / "trained_models" / "model_LSTM.h5"
 model = keras.models.load_model("east_model4.h5")
-with open('Tokenizer3.pickle', 'rb') as handle:
+with open('Tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
 wordsind = tokenizer.word_index
 print(111,wordsind)
