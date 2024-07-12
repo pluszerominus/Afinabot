@@ -2,7 +2,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, LSTM, Embedding, Dropout
 
 
-def model_LSTM(token_words=25000,max_sen_len=700):
+def model_LSTM(token_words=25000,max_sen_len=200):
     model = Sequential()
 
     model.add(Embedding(token_words, 200, input_length=max_sen_len))
