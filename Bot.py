@@ -12,6 +12,7 @@ import sqlite3
 import random
 import schedule
 from threading import Thread,Event
+from pathlib import Path
 import re
 
 
@@ -112,9 +113,9 @@ def keycreate():
     return keystr
 
 #   Импортируем данные
-
-model = keras.models.load_model("east_model4.h5")
-with open('Tokenizer3.pickle', 'rb') as handle:
+model_path = Path.cwd() / "trained_models" / "model_LSTM.h5"
+model = keras.models.load_model(model_path)
+with open('Tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
 wordsind = tokenizer.word_index
 print(111,wordsind)
@@ -139,7 +140,8 @@ def matmassage(mess):
 #   Функция для обновления времени работы бота для серверов
 
 def updatetime():
-    connect = sqlite3.connect("D:\Discord.sqlite")
+    database_path = "Discord.sqlite""
+    connect = sqlite3.connect(database_path)
     curr = connect.cursor()
     curr.execute("SELECT serverid,payinfo,time,addtime FROM clientservers")
     runresult = curr.fetchall()
